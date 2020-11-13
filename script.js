@@ -1,7 +1,7 @@
 const baseUrl = "https://api.github.com/graphql"
 
 const githubInfo = {
-    "token": "1eefe5061d092f7b2cd64c79386bc402c6aa928d",
+    "token": "bf1fc737a45e7f73557940497d5558a27f7c709a",
     "username": "jelhill"
 }
 const headers = {
