@@ -7,30 +7,67 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="header">
+        <div class="header-left-menu">
+            <span><i class="fa fa-bars"></i></span>
+            <img src="gitlogo.png" alt="">
+            <input type="text" name="" id="" class="header-search" placeholder="search or jump to ...">
+            <ul>
+                <li><a href="">Pull Request</a></li>
+                <li><a href="">Issues</a></li>
+                <li><a href="">Marketplace</a></li>
+                <li><a href="">Explore</a></li>
+            </ul>
+        </div>
+        <div class="header-right-menu">
+            <span><i class="fa fa-bell"></i></span>
+            <select name="" id="">
+                <option value="">+</option>
+            </select>
+            <span id="mini-avatar">
+
+            </span>
+        </div>
+    </div>
     <div class="wrapper">
         <div class="left-wrapper">
-            <div class="image-wrapper" id="avatar-div">
-                
-            </div>
             <div class="profile-div">
-                <h2>Jelili Umaru</h2>
-                <p>jelhill</p>
-                <p>Software Engineer</p>
-                <button class="edit-button">Edit Profile</button>
-            </div>
+                <div class="image-wrapper" id="avatar-div">
+                </div>
+                <div class="name-div">
+                    <h2 class="fullname">Jelili Umaru</h2>
+                    <span class="username">jelhill</span>
+                </div>
+             </div>
+             <div class="profile-btn-div">
+                 <p class="title">Software Engineer</p>
+                 <button class="edit-button">Edit Profile</button>
+             </div>
         </div>
         <div class="right-wrapper">
             <ul class="header-menu">
-                <li><a href="">Overview</a></li>
+                <!-- <li><i class="fa fa-book-open"></i><a href="">Overview</a></li>
                 <li><a href="">Repository</a></li>
                 <li><a href="">Project</a></li>
-                <li><a href="">Packages</a></li>        
+                <li><a href="">Packages</a></li>         -->
             </ul>
-            <p class="popular-rep">Popular Repository</p>
+            <div class="filter-div">
+                <input type="text" name="" id="" placeholder="find a repository...">
+                <select name="" id="" class="type-all">
+                    <option value="">Type All</option>
+                </select>
+                <select name="" id="" class="language-all">
+                    <option value="">Language All</option>
+                </select>
+                <small><i class="fa fa-television"></i>New</small>
+            </div>
             <div id="projectWrapper">         
         </div>
         </div>
     </div>    
+
+
+    <script src="https://kit.fontawesome.com/a08312b551.js" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,24 +1,26 @@
 const baseUrl = "https://api.github.com/graphql"
+
 const githubInfo = {
-    "token": "019e036f078a0cd60b8553c45edd8c90f4794869",
+    "token": "77e87c3607a3a76552eda6862bdf67aac31460eb",
     "username": "jelhill"
 }
 const headers = {
     "Content-Type": "application/json",
-    Authentication:  "Bearer " + githubInfo["token"]
+    Authorization:  "Bearer " + githubInfo.token
 }
 const body = {
     "query": `
         query { 
         user(login: "jelhill") {
-          avatarUrl
+          avatarUrl 
           repositories(first: 20) {
             edges {
               node {
                 id,
                 isPrivate,
                 name,
-                createdAt
+                createdAt,
+                descriptionHTML
               }
             }
           }
@@ -30,9 +32,9 @@ document.addEventListener("DOMContentLoaded", getRepo)
 
 
 function duration(updated_at){
-    updated_at = new Date(checkin.split("T").join(" ").split("Z")[0]).getTime()
+    updated_at = new Date(updated_at.split("T").join(" ").split("Z")[0]).getTime()
     let now = Date.now()
-    let seconds = (now - checkin)/1000
+    let seconds = (now - updated_at)/1000
     if(seconds < 60) return `${seconds} seconds`
 
     if(seconds > 60 && seconds < 3600) {
@@ -63,44 +65,34 @@ function getRepo() {
     .then(jsonRes => {
         console.log(jsonRes);
         if(jsonRes) {
-            document.getElementById("avatar-div").innerHTML = `<img src="${jsonRes.avatar_url}" alt="">`
-        }
+            document.getElementById("avatar-div").innerHTML = `<img src="${jsonRes.data.user.avatarUrl}" alt="">`
+            document.getElementById("mini-avatar").innerHTML = `<img src="${jsonRes.data.user.avatarUrl}" alt="">`
+            document.getElementById("projectWrapper").innerHTML = 
+            jsonRes.data.user.repositories.edges.map((repo) => {
+                return `
+                <div class="project-wrapper" id="projectWrapper">
+                    <div class="project-div">
+                        <div class="project-name">
+                            <a href="" class="repo-name">${repo.node.name}</a>
+                            ${!repo.node.isPrivate ? "" : "<small>Private</small>"}
+                        </div>
+                        <div class="lang-div">
+                            <div class="${repo.node.descriptionHTML === "<div></div>" ? "lang-color" : "redcolor"}"></div>
+                            <span>${repo.node.descriptionHTML === "<div></div>" ? "JavaScript" : "HTML"}</span>
+                            <span>Updated ${duration(repo.node.createdAt)}</span>
+                        </div>
+                    </div>
+
+                    <div class="star-div">
+                        <div class="star-btn">
+                            <img src="starimage.jpg" alt="star image"></small>
+                            Star
+                        </div>
+                    </div>
+                    </div>
+                `
+            })
+        }   
     })
     .catch(err => console.log(err))
-
-
-    // fetch("https://api.github.com/users/jelhill/repos")
-    // .then(response => response.json())
-    // .then(jsonResponse => {
-    //     console.log(jsonResponse)
-    //     if (jsonResponse.length) {
-    //         // document.getElementById("avatar-div").innerHTML = `<img src="${}" alt="">`
-    //         document.getElementById("projectWrapper").innerHTML = 
-    //         jsonResponse.slice(0, 20).map((repo) => {
-    //             return `
-    //             <div class="project-wrapper" id="projectWrapper">
-    //                 <div class="project-div">
-    //                     <div class="project-name">
-    //                         <a href="">${repo.name}</a>
-    //                         ${repo.private ? null : "<span>Private</span>"}
-    //                     </div>
-    //                     <div class="lang-div">
-    //                         <div class="lang-color"></div>
-    //                         <span>JavaScript</span>
-    //                         <span>Updated ${duration(repo.created_at)}</span>
-    //                     </div>
-    //                 </div>
-
-    //                 <div class="star-div">
-    //                     <div class="star-btn">
-    //                         <small></small><img src="starimage.jpg" alt="star image"></small>
-    //                         Star
-    //                     </div>
-    //                 </div>
-    //                 </div>
-    //             `
-    //         })
-    //     }
-    // })
-    // .catch(error => console.log(error))
 }
